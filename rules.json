@@ -2312,13 +2312,27 @@
     "جي": "جاي",
     "بتمنى": "باتمنى"
   },
-  "regexRules": [
+    "regexRules": [
     {
       "id": "double_space",
       "pattern": " {2,}",
       "flags": "g",
       "message": "مسافة مزدوجة — يجب استخدام مسافة واحدة",
       "replacement": " "
+    },
+    {
+      "id": "allow_question_exclamation_combo",
+      "pattern": "(\\?\\!|\\!\\?|؟\\!|\\!؟)",
+      "flags": "g",
+      "message": "تجاهل تسلسل علامات الاستفهام والتعجب دون مسافة",
+      "replacement": "$1"
+    },
+    {
+      "id": "protect_asterisk_number",
+      "pattern": "\\*(\\d+)\\*",
+      "flags": "g",
+      "message": "حماية الأرقام داخل نجمتين من التعديلات المؤقتة",
+      "replacement": "%%BABEL_PROTECT_NUM__$1%%"
     },
     {
       "id": "tag_punctuation_attachment_with_space",
@@ -2364,14 +2378,14 @@
     },
     {
       "id": "punctuation_between_words_no_spaces",
-      "pattern": "([^\\s<])([،؛:\\?\\!؟]|\\.(?!\\.))([^\\s<])",
+      "pattern": "([^\\s<])([،؛:\\?\\!؟]|\\.(?!\\.))([^\\s<،؛:\\?\\!؟\\.])",
       "flags": "g",
       "message": "يجب وضع مسافة بعد علامة الترقيم المتصلة بالكلمات",
       "replacement": "$1$2 $3"
     },
     {
       "id": "no_space_after_punctuation",
-      "pattern": "(?:[،؛:\\?\\!؟]|\\.(?!\\.))(?!\\s|$)",
+      "pattern": "(?:[،؛:\\?\\!؟]|\\.(?!\\.))(?![\\s،؛:\\?\\!؟\\.]|$)",
       "flags": "g",
       "message": "يجب وضع مسافة بعد علامة الترقيم",
       "replacement": "$& "
@@ -2424,6 +2438,13 @@
       "flags": "g",
       "message": "يُفضّل استخدام علامة الاستفهام العربية ؟ بدلاً من ؟",
       "replacement": "؟"
+    },
+    {
+      "id": "restore_asterisk_number",
+      "pattern": "%%BABEL_PROTECT_NUM__(\\d+)%%",
+      "flags": "g",
+      "message": "استعادة الأرقام المحمية داخل نجمتين",
+      "replacement": "*$1*"
     }
   ]
 }
